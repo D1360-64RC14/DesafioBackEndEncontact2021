@@ -25,7 +25,7 @@ namespace TesteBackendEnContact.Controllers
             return await contactBookRepository.SaveAsync(contactBook);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task Delete(int id, [FromServices] IContactBookRepository contactBookRepository)
         {
             await contactBookRepository.DeleteAsync(id);
