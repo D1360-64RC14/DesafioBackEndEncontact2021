@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.Data.Sqlite;
 
 using System;
-using TesteBackendEnContact.Database;
 using TesteBackendEnContact.Repository;
 using TesteBackendEnContact.Repository.Interface;
 
@@ -38,7 +38,8 @@ namespace TesteBackendEnContact
                         .ScanIn(typeof(Startup).Assembly).For.Migrations())
                     .AddLogging(lb => lb.AddFluentMigratorConsole());
 
-            services.AddSingleton(new DatabaseConfig { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
+            services.AddSingleton(new SqliteConnection(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped<IContactBookRepository, ContactBookRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
         }
