@@ -6,19 +6,14 @@ using TesteBackendEnContact.Core.Domain.ContactBook;
 using TesteBackendEnContact.Core.Interface.ContactBook;
 using TesteBackendEnContact.Repository.Interface;
 
-namespace TesteBackendEnContact.Controllers
-{
+namespace TesteBackendEnContact.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class ContactController : ControllerBase
-    {
+    public class ContactController : ControllerBase {
         private readonly ILogger<ContactController> _logger;
 
-        public ContactController(ILogger<ContactController> logger)
-        {
+        public ContactController(ILogger<ContactController> logger) {
             _logger = logger;
         }
-
-
     }
 }

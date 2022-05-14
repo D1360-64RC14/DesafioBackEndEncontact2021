@@ -1,12 +1,9 @@
 ﻿using FluentMigrator;
 
-namespace TesteBackendEnContact.Database
-{
+namespace TesteBackendEnContact.Database {
     [Migration(1)]
-    public class DatabaseMigration : Migration
-    {
-        public override void Up()
-        {
+    public class DatabaseMigration : Migration {
+        public override void Up() {
             Create.Table("ContactBook")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Name").AsString(50).NotNullable()
@@ -29,8 +26,7 @@ namespace TesteBackendEnContact.Database
             ;
         }
 
-        public override void Down()
-        {
+        public override void Down() {
             Delete.Table("Company");
             Delete.Table("Contact");
             Delete.Table("ContactBook");

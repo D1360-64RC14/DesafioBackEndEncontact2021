@@ -8,20 +8,16 @@ using TesteBackendEnContact.Core.Domain.ContactBook;
 using TesteBackendEnContact.Core.Interface.ContactBook;
 using TesteBackendEnContact.Repository.Interface;
 
-namespace TesteBackendEnContact.Repository
-{
-    public class ContactBookRepository : IContactBookRepository
-    {
+namespace TesteBackendEnContact.Repository {
+    public class ContactBookRepository : IContactBookRepository {
         private readonly SqliteConnection dbConnection;
 
-        public ContactBookRepository(SqliteConnection dbConnection)
-        {
+        public ContactBookRepository(SqliteConnection dbConnection) {
             this.dbConnection = dbConnection;
         }
 
 
-        public async Task<IContactBook> SaveAsync(IContactBook contactBook)
-        {
+        public async Task<IContactBook> SaveAsync(IContactBook contactBook) {
             var dao = new ContactBookDao(contactBook);
 
             dao.Id = await dbConnection.InsertAsync(dao);
@@ -29,35 +25,27 @@ namespace TesteBackendEnContact.Repository
             return dao.Export();
         }
 
-
-        public async Task DeleteAsync(int id)
-        {
+        public async Task DeleteAsync(int id) {
             // TODO
             var sql = "";
 
             await dbConnection.ExecuteAsync(sql);
         }
 
-
-
-
-        public async Task<IEnumerable<IContactBook>> GetAllAsync()
-        {
+        public async Task<IEnumerable<IContactBook>> GetAllAsync() {
             var query = "SELECT * FROM ContactBook";
             var result = await dbConnection.QueryAsync<ContactBookDao>(query);
 
             var returnList = new List<IContactBook>();
 
-            foreach (var AgendaSalva in result.ToList())
-            {
+            foreach (var AgendaSalva in result.ToList()) {
                 IContactBook Agenda = new ContactBook(AgendaSalva.Id, AgendaSalva.Name.ToString());
                 returnList.Add(Agenda);
             }
 
             return returnList.ToList();
         }
-        public async Task<IContactBook> GetAsync(int id)
-        {
+        public async Task<IContactBook> GetAsync(int id) {
             var list = await GetAllAsync();
 
             return list.ToList().Where(item => item.Id == id).FirstOrDefault();
@@ -65,18 +53,15 @@ namespace TesteBackendEnContact.Repository
     }
 
     [Table("ContactBook")]
-    public class ContactBookDao : IContactBook
-    {
+    public class ContactBookDao : IContactBook {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ContactBookDao()
-        {
+        public ContactBookDao() {
         }
 
-        public ContactBookDao(IContactBook contactBook)
-        {
+        public ContactBookDao(IContactBook contactBook) {
             Id = contactBook.Id;
             Name = contactBook.Name;
         }

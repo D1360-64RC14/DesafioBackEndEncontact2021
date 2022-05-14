@@ -2,10 +2,8 @@
 using TesteBackendEnContact.Core.Domain.ContactBook.Company;
 using TesteBackendEnContact.Core.Interface.ContactBook.Company;
 
-namespace TesteBackendEnContact.Controllers.Models
-{
-    public class SaveCompanyRequest
-    {
+namespace TesteBackendEnContact.Controllers.Models {
+    public class SaveCompanyRequest {
         public int Id { get; set; }
         [Required]
         public int ContactBookId { get; set; }

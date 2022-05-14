@@ -10,19 +10,15 @@ using TesteBackendEnContact.Core.Interface.ContactBook.Company;
 using TesteBackendEnContact.Database;
 using TesteBackendEnContact.Repository.Interface;
 
-namespace TesteBackendEnContact.Repository
-{
-    public class CompanyRepository : ICompanyRepository
-    {
+namespace TesteBackendEnContact.Repository {
+    public class CompanyRepository : ICompanyRepository {
         private readonly SqliteConnection dbConnection;
 
-        public CompanyRepository(SqliteConnection dbConnection)
-        {
+        public CompanyRepository(SqliteConnection dbConnection) {
             this.dbConnection = dbConnection;
         }
 
-        public async Task<ICompany> SaveAsync(ICompany company)
-        {
+        public async Task<ICompany> SaveAsync(ICompany company) {
             var dao = new CompanyDao(company);
 
             if (dao.Id == 0)
@@ -33,8 +29,7 @@ namespace TesteBackendEnContact.Repository
             return dao.Export();
         }
 
-        public async Task DeleteAsync(int id)
-        {
+        public async Task DeleteAsync(int id) {
             using var transaction = dbConnection.BeginTransaction();
 
             var sql = new StringBuilder();
@@ -44,16 +39,14 @@ namespace TesteBackendEnContact.Repository
             await dbConnection.ExecuteAsync(sql.ToString(), new { id }, transaction);
         }
 
-        public async Task<IEnumerable<ICompany>> GetAllAsync()
-        {
+        public async Task<IEnumerable<ICompany>> GetAllAsync() {
             var query = "SELECT * FROM Company";
             var result = await dbConnection.QueryAsync<CompanyDao>(query);
 
             return result?.Select(item => item.Export());
         }
 
-        public async Task<ICompany> GetAsync(int id)
-        {
+        public async Task<ICompany> GetAsync(int id) {
             var query = "SELECT * FROM Company where Id = @id";
             var result = await dbConnection.QuerySingleOrDefaultAsync<CompanyDao>(query, new { id });
 
@@ -62,19 +55,16 @@ namespace TesteBackendEnContact.Repository
     }
 
     [Table("Company")]
-    public class CompanyDao : ICompany
-    {
+    public class CompanyDao : ICompany {
         [Key]
         public int Id { get; set; }
         public int ContactBookId { get; set; }
         public string Name { get; set; }
 
-        public CompanyDao()
-        {
+        public CompanyDao() {
         }
 
-        public CompanyDao(ICompany company)
-        {
+        public CompanyDao(ICompany company) {
             Id = company.Id;
             ContactBookId = company.ContactBookId;
             Name = company.Name;
