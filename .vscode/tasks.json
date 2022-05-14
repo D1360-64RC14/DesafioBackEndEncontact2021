@@ -32,6 +32,7 @@
             "args": [
                 "watch",
                 "run",
+                "--project",
                 "${workspaceFolder}/TesteBackendEnContact/TesteBackendEnContact.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
