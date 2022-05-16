@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Interface.ContactBook;
+using TesteBackendEnContact.DataClass.Interface;
 
 namespace TesteBackendEnContact.Repository.Interface {
     public interface IContactBookRepository {

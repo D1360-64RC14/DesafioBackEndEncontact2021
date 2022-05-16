@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Domain.ContactBook;
-using TesteBackendEnContact.Core.Interface.ContactBook;
+using TesteBackendEnContact.PostDataClass;
+using TesteBackendEnContact.PostDataClass.Interface;
+using TesteBackendEnContact.DataClass;
+using TesteBackendEnContact.DataClass.Interface;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact.Controllers {

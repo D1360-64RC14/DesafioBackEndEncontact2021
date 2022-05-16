@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TesteBackendEnContact.Controllers.Models;
-using TesteBackendEnContact.Core.Interface.ContactBook.Company;
+using TesteBackendEnContact.PostDataClass;
+using TesteBackendEnContact.PostDataClass.Interface;
+using TesteBackendEnContact.DataClass;
+using TesteBackendEnContact.DataClass.Interface;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact.Controllers {
@@ -17,11 +19,14 @@ namespace TesteBackendEnContact.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult<ICompany>> Post(SaveCompanyRequest company, [FromServices] ICompanyRepository companyRepository) {
-            return Ok(await companyRepository.SaveAsync(company.ToCompany()));
+        public async Task<ICompany> Post(
+            CompanyPostData requestData,
+            [FromServices] ICompanyRepository companyRepository
+        ) {
+            return await companyRepository.SaveAsync(requestData);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task Delete(int id, [FromServices] ICompanyRepository companyRepository) {
             await companyRepository.DeleteAsync(id);
         }

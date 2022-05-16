@@ -4,23 +4,22 @@ using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TesteBackendEnContact.Core.Domain.ContactBook;
-using TesteBackendEnContact.Core.Interface.ContactBook;
+using TesteBackendEnContact.DataClass;
+using TesteBackendEnContact.DataClass.Interface;
 using TesteBackendEnContact.Repository.Interface;
 
 namespace TesteBackendEnContact.Repository {
     public class ContactBookRepository : IContactBookRepository {
-        private readonly SqliteConnection dbConnection;
+        private readonly SqliteConnection repository;
 
         public ContactBookRepository(SqliteConnection dbConnection) {
-            this.dbConnection = dbConnection;
+            this.repository = dbConnection;
         }
-
 
         public async Task<IContactBook> SaveAsync(IContactBook contactBook) {
             var dao = new ContactBookDao(contactBook);
 
-            dao.Id = await dbConnection.InsertAsync(dao);
+            dao.Id = await repository.InsertAsync(dao);
 
             return dao.Export();
         }
@@ -29,12 +28,12 @@ namespace TesteBackendEnContact.Repository {
             // TODO
             var sql = "";
 
-            await dbConnection.ExecuteAsync(sql);
+            await repository.ExecuteAsync(sql);
         }
 
         public async Task<IEnumerable<IContactBook>> GetAllAsync() {
             var query = "SELECT * FROM ContactBook";
-            var result = await dbConnection.QueryAsync<ContactBookDao>(query);
+            var result = await repository.QueryAsync<ContactBookDao>(query);
 
             var returnList = new List<IContactBook>();
 
